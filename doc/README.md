@@ -22,6 +22,7 @@ Send (currancy)
 
 
 Item API
-Items are just stored as heshas on the blockchaing
+Items are just stored as hashas on the blockchain.
+This has the advantage that the 
 
 ## [Features]()
