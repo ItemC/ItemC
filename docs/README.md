@@ -19,7 +19,7 @@ the game to transfer cards to the players. The players can be sure that the card
 players trade these cards within the network for digital currency, part of ItemC.
 
 Trading of cards is also made much more secure by using ItemC. William has a very rare card that he is looking to trade for some ItemC currency. He finds a buyer, Abe,
-that is willing to buy the card for a nice price. They decide that they are going to trade, and Abe puts up the bid on the network and signs it with his private key
+who is willing to buy the card for a nice price. They decide that they are going to trade, and Abe puts up the bid on the network and signs it with his private key
 verifying that he was the one who initialized the bid. William now has a certain amount of time (specified by abe) to confirm the transaction and initiate the exchange
 of items. William also signs the request and the transaction enters the network as a "mutually signed transaction" that needs confirmation. Once the confirmation happens
 within the network William gets his payment, and Abe gets his card all without having to trust eachother or any third party. Since the value of the card and the value of the
