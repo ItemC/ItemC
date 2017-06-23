@@ -55,8 +55,8 @@ obj = Test(
 
 
 encoded = encode(obj)
-print (encoded)
+print ("Encoded", encoded, '\n')
 decoded = decode(Test, encoded)
-print (obj)
+print ("Decoded", decoded)
 
 
