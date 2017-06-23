@@ -12,12 +12,8 @@ class Test:
                 ("128s", "message")]
              
     def __init__(self, **kargs):
-        self.id_ = kargs['id_']
-        self.amount = kargs['amount']
-        self.to = kargs['to']
-        self.from_ = kargs['from_']
-        self.message = kargs['message']
-            
+        setInstanceVars(self, kargs)
+
     def __str__(self):
         return ("""
 _id: {}
@@ -27,14 +23,19 @@ from_: {}
 message: {}
         """.format(self.id_, self.amount, self.to, self.from_, self.message))
 
+
+#### Utility functions below that need to be put into their own files
+
+def setInstanceVars(obj, arguments):
+    for varname in arguments:
+        setattr(obj, varname, arguments[varname])
+
 def get_encoding_string(encoding):
     return ''.join(map(lambda x: x[0], encoding))
 
-
-def encode(self):
-    args = map(lambda x: x.encode("utf8") if type(x) == str else x, [getattr(self, x[1]) for x in self.encoding])
-
-    return pack(get_encoding_string(Object.encoding), *args)
+def encode(obj):
+    args = map(lambda x: x.encode("utf8") if type(x) == str else x, [getattr(obj, x[1]) for x in obj.encoding])
+    return pack(get_encoding_string(obj.encoding), *args)
 
 def decode(Object, binary):
     unpacked = unpack(get_encoding_string(Object.encoding), binary)
