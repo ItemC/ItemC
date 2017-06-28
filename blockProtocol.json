@@ -1,0 +1,19 @@
+{
+head:{
+    hash:"k3klaslakdfk3190ddl12kdk34ld",
+    previous:"ak2k1kkadadsk1231l23lsdf",
+    pow:"0000001jasdkkk123llsdfosdf9123",
+    nonce:"53010",
+    timestamp:"41252030",
+    merkelTreeRoot:"248397058034470139857",
+    }
+body:[
+        {
+            "from":"k1Kdl12kFlalsd",
+            "to":"asdk12k312k3sdflasd",
+            "type":"currency",
+            "amount":"5",
+            "txid":"1299sdlsdfl123k123kasd"
+        }
+    ]
+}
