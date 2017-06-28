@@ -1,0 +1,31 @@
+{
+    "hash":"k3klaslakdfk3190ddl12kdk34ld",
+    "previous":"ak2k1kkadadsk1231l23lsdf",
+    "pow":"0000001jasdkkk123llsdfosdf9123",
+    "nonce":"53010",
+    "timestamp":"41252030",
+    "transactions":[
+        {
+            "from":"k1Kdl12kFlalsd",
+            "to":"asdk12k312k3sdflasd",
+            "type":"currency",
+            "amount":"5",
+            "txid":"1299sdlsdfl123k123kasd"
+        }
+    ]
+}
+
+/*
+
+hash: previous, pow, nonce, timestamp, and transactions array concatinated together as string and hashed
+previous: previous block
+pow: proof of work
+nonce: added to end of transactions array.toString() to get correct hash
+transactions: transactions confirmed in block
+    from: from address
+    to: to address
+    type: type of transaction (currency, item, item_gify)
+    amount: number of items/currency being sold
+    txid: UUID of transaction
+
+*/
