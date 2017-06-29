@@ -4,4 +4,6 @@ class Transaction:
         ("i", "usedTransactionsCount"),
         ()
     ]
-    __init__():
+    def __init__():
+        pass
+
