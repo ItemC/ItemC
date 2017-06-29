@@ -1,9 +1,10 @@
+from utils import *
+
 class Transaction:
     encode = [
         ("32s", "id"),
-        ("i", "usedTransactionsCount"),
-        ()
+        ("s", "inputs")
     ]
-    def __init__():
+    def __init__(sef):
         pass
 
