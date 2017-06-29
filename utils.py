@@ -1,27 +1,12 @@
-from struct import *
+import json
+import hashlib
 
-def set_instance_variables(obj, arguments):
-    for varname in arguments:
-        setattr(obj, varname, arguments[varname])
+def set_vars(self, args):
+    for arg in args:
+        setattr(self, arg, args[arg])
 
-def get_encoding_string(encoding):
-    return ''.join(map(lambda x: x[0], encoding))
+def get_hash(self):
+    return hashlib.md5(str(self.__dict__).encode()).hexdigest()
 
-def encode(obj):
-    args = map(lambda x: x.encode("utf8") if type(x) == str else x, [getattr(obj, x[1]) for x in obj.encoding])
-    return pack(get_encoding_string(obj.encoding), *args)
-
-def decode(Object, binary):
-    unpacked = unpack(get_encoding_string(Object.encoding), binary)
-    kargs = {} 
-    for index, pval in enumerate(unpacked):
-        kargs[Object.encoding[index][1]] = pval
-    return Object(**kargs)
-
-def convert_array_to_binary(array, dataType):
-    if dataType == str:
-        return bytearray(map(lambda x: ord(x),  array))
-    elif dataType == int:
-        return bytearray(array)
-    else:
-        raise Exception("Invalid Type: {} not supported".format(dataType))
+def get_json(self):
+    return json.dumps(self.__dict__)
