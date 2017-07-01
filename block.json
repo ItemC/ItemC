@@ -1,0 +1,18 @@
+{
+    "hash":"<",
+    "nonce":"",
+    "pow":"",
+    "timestamp":"",
+    "previous":""
+    "transactions":[
+        {
+            "from":"coinbase",
+            "to":"",
+            "amount":"",
+            "hash":"",
+            "inputs":[
+                "<other transaction hashs being used to make this one>"
+            ]
+        }
+    ]
+}
