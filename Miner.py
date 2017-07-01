@@ -1,10 +1,10 @@
-from Blockchain import Blockchain
+from Block import Block
 from Transaction import Transaction
 import hashlib
 from utils import *
 
 coinbase = {
-    "amount":Blockchain.getCoinbase(),
+    "amount":Block.getCoinbase(),
     "fromAddress":"coinbase",
     "toAddress":"pub"
 }
@@ -17,7 +17,7 @@ transactionHashes = ''.join([x.hash for x in sorted(transactionsToConfirm, key=l
 # sha512(<concatinated list of transaction hashes listed in order of time><nonce>)
 nonce = 0
 while True:
-    difficulty = Blockchain.getDifficulty()
+    difficulty = Block.getDifficulty()
     hash = hashlib.sha512((str(transactionHashes) + str(nonce)).encode()).hexdigest()
     #print (hash, transactionHashes + str(nonce))
     if hash.encode("utf8").startswith(("0" * difficulty).encode()):
