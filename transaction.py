@@ -6,11 +6,11 @@ import uuid
 
 class Transaction:
     def __init__(self, **kwargs):
-        self.fromAddress = kwargs['fromAddress']
-        self.toAddress = kwargs['toAddress']
-        self.amount = kwargs['amount']
-        # self.inputs 
-        # self.outputs
+        # self.fromAddress = kwargs['fromAddress']
+        # self.toAddress = kwargs['toAddress']
+        # self.amount = kwargs['amount']
+        self.inputs
+        self.outputs
         self.hash = get_hash(self) # Everyhting before gets hashed
         self.time = time.time()
 
