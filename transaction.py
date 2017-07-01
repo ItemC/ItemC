@@ -23,6 +23,17 @@ class Transaction:
                 open("data_files/transactions.json", 'w').write(transactionJson) 
 
 
+class TransactionInput:
+    def __init__(self, address, index):
+        self.address = address
+        self.outputIndex = index
+    
+
+class TransactionOutput:
+    def __init__(self, amount, toAddress):
+        self.amount = amount
+        self.address = toAddress
+
 if __name__ == "__main__":
     to = "pub"
     fromAddress="coinbase"
