@@ -1,7 +1,9 @@
 from Block import *
 
 class Blockchain:
-    blocks = []
+    
+    def __init__(self):
+        self.blocks = self.load_from_file()
 
     #the blockchain gets compleatly loaded into ram when using it. (for now) this is why there is loading and saving. Although blcoks already support singe loading/saving
     def write_to_file(self, pathToDirectory):
@@ -16,13 +18,15 @@ class Blockchain:
     def get_unspend_transactions_for_address(self, address):
         allTransactions = []
         for b in self.blocks:
-            allTransactions += b.transactions
+            allTransactions.append(b.transactions)
         
         transactionsWithAddress = list(filter(lambda transaction: (transaction.fromAddress == address or transaction.toAdress == address), allTransactions))
+
+
         def not_used_as_input(transaction):
             for t in allTransactions:
                 if transaction in t.inputs:
                     return True
-                return False
+            return False
         unspendTransactionsWithAdress = list(filter(lambda transaction: not_used_as_input(transaction), transactionsWithAddress))
         return unspendTransactionsWithAdress
