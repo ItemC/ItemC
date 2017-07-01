@@ -10,6 +10,7 @@
             "to":"",
             "amount":"",
             "hash":"",
+            "signature":"",
             "inputs":[
                 "<other transaction hashs being used to make this one>"
             ]

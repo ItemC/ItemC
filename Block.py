@@ -24,6 +24,6 @@ class Block:
                     self.__dict__  
                 ]))
         else:
-            current_json = json.load(open("data_files/blockchain.json"))
-            current_json.append(json.dumps(self.__dict__))
+            currentJson = json.load(open("data_files/blockchain.json"))
+            currentJson.append(json.dumps(self.__dict__))
 
