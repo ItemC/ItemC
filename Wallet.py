@@ -10,7 +10,7 @@ class Wallet:
         self.bchain = Blockchain()
 
     def get_balance(self):
-        transactions = bchain.get_unspend_transactions_for_adress(key)
+        transactions = self.bchain.get_unspend_transactions_for_adress(key)
 
         balance = 0
         for t in transactions:
