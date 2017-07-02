@@ -2,12 +2,15 @@ from utils import *
 from hashlib import *
 import json
 import os
+from Transaction import Transaction
 
 class Block:
     def __init__(self, **kwargs):
         self.proofOfWork = kwargs['proofOfWork']
         self.nonce = kwargs['nonce']
         self.transactions = kwargs['transactions']
+        for transactionDict in self.transactions:
+            transaction = Transaction(**transactionDict)
         self.previous = kwargs['previous']
         self.timestamp = kwargs['timestamp']
         self.hash = self.get_hash()

@@ -11,7 +11,7 @@ class Transaction:
         self.toAddr = kwargs['toAddr']
         self.fromAddr = kwargs['fromAddr']
         self.amount = kwargs['amount']
-        self.inputs = kwargs['inputs']
+        self.input = kwargs['inputs']
         self.outputs = kwargs['outputs']
         if "hash" not in kwargs:
             self.hash = hashlib.sha1(str(self.inputs) + str(self.outputs)).hexdigest()
@@ -41,12 +41,7 @@ class Transaction:
             return Exception("Invalid Signature")
         
     def is_spent(self):
-        blocks = json.load(open(".data/blockchain.json"))
-        for block in blocks:
-            for i in block['inputs']:
-                if i['hash'] == self.hash:
-                    return True
-        return False
+        return utils.blockchain.is_transaction_spend(self)
     
     def send(self):
         if not self.signature:

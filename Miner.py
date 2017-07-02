@@ -15,8 +15,9 @@ transactionsToConfirm = [coinbaseTransaction]
 transactionHashes = ''.join([x.hash for x in sorted(transactionsToConfirm, key=lambda x: x.time)])
 
 # sha512(<concatinated list of transaction hashes listed in order of time><nonce>)
+nonce = 0
+maxNonce = 2**32
 while True:
-    nonce = 0
     difficulty = Block.getDifficulty()
     hash = hashlib.sha512((str(transactionHashes) + str(nonce)).encode()).hexdigest()
     #print (hash, transactionHashes + str(nonce))

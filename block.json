@@ -9,7 +9,7 @@
             "hash":"eef8e89a0s9999c9d88e900d0s9",
             "signature":"<string>",
             "inputs":[{
-                "txid":"coinbase",
+                "txhash":"coinbase",
                 "outputIndex":0
             }],
             "outputs":[{
@@ -22,7 +22,7 @@
             "signature":"<string>",
             "inputs":[
                 {
-                    "txid":"eef8e89a0s9999c9d88e900d0s9",
+                    "txhash":"eef8e89a0s9999c9d88e900d0s9",
                     "outputIndex":0
                 }
             ],

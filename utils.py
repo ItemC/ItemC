@@ -4,6 +4,10 @@ import hashlib
 import os
 import random
 import base64
+from Blockchain import *
+
+
+blockchain = Blockchain()
 
 def calc_difficulty():
     # Temporary difficulty algorith: 1 - num_blocks / 1000
@@ -63,3 +67,8 @@ def get_keys():
     with open(".data/priv.key", 'r') as f:
         priv = rsa.PrivateKey.load_pkcs1(f.read())
     return {"public":pub, "private":priv}
+
+#DEGUG
+
+def log(string):
+    print(string)
