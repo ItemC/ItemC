@@ -17,7 +17,10 @@ class Block:
         hashString = transactionHashes + self.proofOfWork + self.nonce + self.previous + str(self.timestamp)
         return sha1(hashstring).hexdigest()
 
-    def write_block(self):
+    def verify_block(self):
+        pass
+
+    def save_block(self):
         if not os.path.exists("data_files/blockchain.json"):
             with open("data_files/blockchain.json", 'w') as bc:
                 bc.write(json.dumps([

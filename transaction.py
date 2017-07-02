@@ -4,6 +4,7 @@ import json
 import time
 import uuid
 import pprint
+import base64
 
 class Transaction:
     def __init__(self, **kwargs):
@@ -26,21 +27,47 @@ class Transaction:
 
     def sign_transaction(self):
         if not self.signature:
-            self.signature = rsa.sign(self.hash, self.keys['public'], "SHA-1")
+            self.signature = base64.b64encode(rsa.sign(self.hash, self.keys['public'], "SHA-1"))
         else:
             raise Exception("Transaction already signed.")
 
     def verify_transaction(self):
-        pass
-
+        check_hash = hashlib.sha1(str(self.inputs) + str(self.output)).hexdigest()
+        if check_hash != self.hash:
+            raise Exception("Transaction is invalid.")
+        if self.is_spent():
+            return Exception("Transaction is already spent.")
+        if not rsa.verify(self.hash.encode(), base64.b64decode(self.signature), load_public_key(self.fromAddr)):
+            return Exception("Invalid Signature")
+        
     def is_spent(self):
-        with open(".wallet/blockchain.json", 'r') as bc:
-            pass
-
+        blocks = json.load(open(".data/blockchain.json"))
+        for block in blocks:
+            for i in block['inputs']:
+                if i['hash'] == self.hash:
+                    return True
+        return False
+    
     def send(self):
         if not self.signature:
             raise Exception("Transaction is not signed.")
-       
+    
+        self.verify_transaction()
+        if self.is_spent():
+            raise Exception("Transaction is already spent")
+
+        transaction = json.load(open(".data/transactions.json"))
+        transaction['unverified'].append({
+            "toAddr":self.toAddr,
+            "fromAddr":self.fromAddr,
+            "inputs":self.inputs,
+            "output":self.outputs,
+            "hash":self.hash,
+            "signature":self.signature
+        })
+        with open(".data/transaction.json", 'w') as f:
+            f.write(json.dumps(transaction))
+
     def __str__(self):
         pprint.pprint({
             "hash":self.hash,
