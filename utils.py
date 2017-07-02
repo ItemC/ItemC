@@ -1,7 +1,4 @@
-from Crypto.Hash import MD5
-from Crypto.PublicKey import RSA
-from Crypto.Random import random
-from Crypto import Random
+import rsa
 import json
 import hashlib
 import os
@@ -37,10 +34,19 @@ def calc_coinbase():
     return 100 - (num_blocks / 1000) * 100
 
 def generate_keys():
-    key = RSA.generate(1024, e=random.choice(range(1,100001, 2)))
-    pub = key.publickey().exportKey("DER")
-    priv = key.exportKey("DER")
-    pub = base64.b64encode(pub)
-    priv = base64.b64encode(priv)
-    return (pub, priv)
+    pub,priv = rsa.newkeys(512)
+    os.mkdir(".data")
+    with open(".data/pub.key", 'w') as pubF:
+        with open(".data/priv.key", 'w') as privF:
+            pubF.write(pub.save_pkcs1().decode("utf8"))
+            privF.write(priv.save_pkcs1().decode("utf8"))
+    return {"public":pub, "private":priv}
 
+def get_keys():
+    if not os.path.exists(".data/pub.key") or not os.path.exists(".data/priv.key"):
+        generate_keys()
+    with open(".data/pub.key", 'r') as f:
+        pub = rsa.PublicKey.load_pkcs1(f.read())
+    with open(".data/priv.key", 'r') as f:
+        priv = rsa.PrivateKey.load_pkcs1(f.read())
+    return {"public":pub, "private":priv}

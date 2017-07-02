@@ -1,18 +1,41 @@
 {
-    "hash":"<",
-    "nonce":"",
-    "pow":"",
-    "timestamp":"",
-    "previous":""
+    "hash":"a3f0939aa9d99300e9f0cfae302",
+    "nonce":"552532",
+    "pow":"00000e3facdef930as0d0a",
+    "timestamp":"<float>",
+    "previous":"<previous block hash>",
     "transactions":[
         {
-            "from":"coinbase",
-            "to":"",
-            "amount":"",
-            "hash":"",
-            "signature":"",
+            "hash":"eef8e89a0s9999c9d88e900d0s9",
+            "signature":"<string>",
+            "inputs":[{
+                "txid":"coinbase",
+                "outputIndex":0
+            }],
+            "outputs":[{
+                "toAddress":"AKekDOdlFlasdWKkekkdkAjbkOOEpdp",
+                "amount":25
+            }]
+        },
+        {
+            "hash":"3d930a99f00e00976e3789f",
+            "signature":"<string>",
             "inputs":[
-                "<other transaction hashs being used to make this one>"
+                {
+                    "txid":"eef8e89a0s9999c9d88e900d0s9",
+                    "outputIndex":0
+                }
+            ],
+            "outputs":[
+                {
+                    "toAddress":"AKekDOdlFlasdWKkekkdkAjbkOOEpdp",
+                    "amount":10
+                },
+
+                {
+                    "toAddress":"IDiekDKsfhhSJDjJWkEooDlSKLDfjEj",
+                    "amount":15
+                }
             ]
         }
     ]
