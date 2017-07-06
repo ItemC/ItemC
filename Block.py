@@ -9,8 +9,6 @@ class Block:
         self.proofOfWork = kwargs['proofOfWork']
         self.nonce = kwargs['nonce']
         self.transactions = kwargs['transactions']
-        for transactionDict in self.transactions:
-            transaction = Transaction(**transactionDict)
         self.previous = kwargs['previous']
         self.timestamp = kwargs['timestamp']
         self.hash = self.get_hash()
@@ -21,7 +19,7 @@ class Block:
         return sha1(hashstring).hexdigest()
 
     def verify_block(self):
-        pass
+        strTransactions = str(self.timestamp) + str(self.nonce) + str(self.transactions)
 
     def save_block(self):
         if not os.path.exists("data_files/blockchain.json"):

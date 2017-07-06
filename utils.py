@@ -4,20 +4,24 @@ import hashlib
 import os
 import random
 import base64
-from Blockchain import *
 
-
-blockchain = Blockchain()
+def get_blockchain():
+    if not os.path.exists(".data"):
+        os.mkdir(".data")
+    try:
+        return json.load(open(".data/blockchain.json"))
+    except:
+        with open(".data/blockchain.json", 'w') as bc:
+            bc.write("[]")
+        return []
 
 def calc_difficulty():
     # Temporary difficulty algorith: 1 - num_blocks / 1000
-    bc = json.load(open(".data/blockchain.json"))
-    return 1 - len(bc) / 1000.0
+    return 1 - len(get_blockchain()) / 1000.0
 
 def calc_coinbase():
     # Temporary coinbase algoithm 100 - (num_blocks / 1000) * 100
-    bc = json.load(open(".data/blockchain.json"))
-    return 100 - (len(bc) / 1000) * 100
+    return 100 - (len(get_blockchain()) / 1000) * 100
 
 def load_public_key(key):
     key = "-----BEGIN RSA PUBLIC KEY-----\n{}\n-----END RSA PUBLIC KEY-----\n".format(key)
@@ -40,18 +44,7 @@ def generate_keys():
         Essentially builds .data folder
     """
     pub,priv = rsa.newkeys(512)
-    if not os.path.exists(".data"):
-        os.mkdir(".data")
-    if not os.path.exists(".data/transactions.json"):
-        with open(".data/transactions.json", 'w') as f:
-            f.write(json.dumps({
-                "unverified":[],
-                "verified":[]
-            }))
-
-    if not os.path.exists(".data/blockchain.json"):
-        with open(".data/blockchain.json", 'w') as f:
-            f.write(json.dumps([]))
+    get_blockchain()
 
     with open(".data/pub.key", 'w') as pubF:
         with open(".data/priv.key", 'w') as privF:

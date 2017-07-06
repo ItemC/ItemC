@@ -1,4 +1,4 @@
-{
+[{
     "hash":"a3f0939aa9d99300e9f0cfae302",
     "nonce":"552532",
     "pow":"00000e3facdef930as0d0a",
@@ -8,10 +8,10 @@
         {
             "hash":"eef8e89a0s9999c9d88e900d0s9",
             "signature":"<string>",
-            "inputs":[{
-                "txhash":"coinbase",
-                "outputIndex":0
-            }],
+            "timestamp":"<float>",
+            "inputs":[
+                "coinbase"
+            ],
             "outputs":[{
                 "toAddress":"AKekDOdlFlasdWKkekkdkAjbkOOEpdp",
                 "amount":25
@@ -20,11 +20,9 @@
         {
             "hash":"3d930a99f00e00976e3789f",
             "signature":"<string>",
+            "timestamp":"<float>",
             "inputs":[
-                {
-                    "txhash":"eef8e89a0s9999c9d88e900d0s9",
-                    "outputIndex":0
-                }
+                "eef8e89a0s9999c9d88e900d0s9"
             ],
             "outputs":[
                 {
@@ -39,4 +37,55 @@
             ]
         }
     ]
+},
+{
+    "hash":"bcef28d9a0df",
+    "nounce":"461408",
+    "pow":"00000e39d0s0ca093",
+    "timestamp":"<float>",
+    "previous":"a3f0939aa9d99300e9f0cfae302",
+    "transactions":[
+        {
+            "hash":"cdabf8e89a0s9999c9d88e900d0s212",
+            "signature":"<string>",
+            "timestamp":"<float>",
+            "inputs":[
+                "coinbase"
+            ],
+            "outputs":[{
+                "toAddress":"AKekDOdlFlasdWKkekkdkAjbkOOEpdp",
+                "amount":10
+            },
+            {
+                "toAddress":"IDiekDKsfhhSJDjJWkEooDlSKLDfjEj",
+                "amount":15
+            }
+            ]
+        },
+        {
+            "hash":"efd2399d09a900",
+            "signature":"<string>",
+            "timestamp":"<float>",
+            "inputs":[
+                "3d930a99f00e00976e3789f",
+                "cdabf8e89a0s9999c9d88e900d0s212"   
+            ],
+
+            "outputs":[
+                {
+                    "toAddress":"IDiekDKsfhhSJDjJWkEooDlSKLDfjEj",
+                    "amount":5
+                },
+                {
+                    "toAddress":"AKekDOdlFlasdWKkekkdkAjbkOOEpdp",
+                    "amount":15
+                },
+                {
+                    "toAddress":"IdkAlzpfkdkDKekSlAjdhfOIoeoWJSkdkLEdo",
+                    "amount":5
+                }
+            ]
+        }
+    ]
 }
+]

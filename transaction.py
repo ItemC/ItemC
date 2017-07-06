@@ -5,16 +5,15 @@ import time
 import uuid
 import pprint
 import base64
+import utils
 
 class Transaction:
     def __init__(self, **kwargs):
-        self.toAddr = kwargs['toAddr']
-        self.fromAddr = kwargs['fromAddr']
-        self.amount = kwargs['amount']
-        self.input = kwargs['inputs']
+        self.inputs = kwargs['inputs']
         self.outputs = kwargs['outputs']
+        self.timestamp = time.time()
         if "hash" not in kwargs:
-            self.hash = hashlib.sha1(str(self.inputs) + str(self.outputs)).hexdigest()
+            self.hash = self.create_transaction_hash() 
         else:
             self.hash = kwargs['hash']
 
@@ -27,22 +26,46 @@ class Transaction:
 
     def sign_transaction(self):
         if not self.signature:
-            self.signature = base64.b64encode(rsa.sign(self.hash, self.keys['public'], "SHA-1"))
+            self.signature = base64.b64encode(rsa.sign(self.hash.encode(), self.keys['private'], "SHA-1"))
         else:
             raise Exception("Transaction already signed.")
 
+    def create_transaction_hash(self):
+        concatinatedString = "{}".format(self.timestamp)
+        for input_ in self.inputs:
+            concatinatedString += input_
+            #concatinatedString += input_['txhash']
+            #concatinatedString += str(input_['outputIndex'])
+        for output in self.outputs:
+            concatinatedString += output['toAddress']
+            concatinatedString += str(output['amount'])
+        return hashlib.sha1(concatinatedString.encode()).hexdigest()
+            
     def verify_transaction(self):
-        check_hash = hashlib.sha1(str(self.inputs) + str(self.output)).hexdigest()
-        if check_hash != self.hash:
+        checkHash = self.create_transaction_hash() 
+        if checkHash != self.hash:
             raise Exception("Transaction is invalid.")
         if self.is_spent():
             return Exception("Transaction is already spent.")
-        if not rsa.verify(self.hash.encode(), base64.b64decode(self.signature), load_public_key(self.fromAddr)):
+        if not rsa.verify(self.hash.encode(), base64.b64decode(self.signature), load_public_key(self.outputs[0]['toAddress'])):
             return Exception("Invalid Signature")
-        
+        if not self.inputs_valid():
+            return Exception("Inputs are invalid")
+
+    def inputs_valid(self):
+        # Need to think about this more
+        blockChain = utils.get_blockchain()
+        return True                            
+
     def is_spent(self):
-        return utils.blockchain.is_transaction_spend(self)
-    
+        blockChain = utils.get_blockchain()
+        for block in blockChain:
+            for transaction in block['transactions']:
+                for input_ in transaction['inputs']:
+                    if input_['hash'] == self.hash:
+                        return True
+        return False
+
     def send(self):
         if not self.signature:
             raise Exception("Transaction is not signed.")
@@ -51,22 +74,12 @@ class Transaction:
         if self.is_spent():
             raise Exception("Transaction is already spent")
 
-        transaction = json.load(open(".data/transactions.json"))
-        transaction['unverified'].append({
-            "toAddr":self.toAddr,
-            "fromAddr":self.fromAddr,
-            "inputs":self.inputs,
-            "output":self.outputs,
-            "hash":self.hash,
-            "signature":self.signature
-        })
-        with open(".data/transaction.json", 'w') as f:
-            f.write(json.dumps(transaction))
-
-    def __str__(self):
-        pprint.pprint({
+        # Send to network 
+        return {
             "hash":self.hash,
             "signature":self.signature,
+            "timestamp":self.timestamp,
             "inputs":self.inputs,
             "outputs":self.outputs
-        })
+        }
+
