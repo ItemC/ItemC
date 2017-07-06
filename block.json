@@ -1,14 +1,13 @@
 [{
     "hash":"a3f0939aa9d99300e9f0cfae302",
     "nonce":"552532",
-    "pow":"00000e3facdef930as0d0a",
+    "proofOfWork":"00000e3facdef930as0d0a",
     "timestamp":"<float>",
     "previous":"<previous block hash>",
     "transactions":[
         {
             "hash":"eef8e89a0s9999c9d88e900d0s9",
             "signature":"<string>",
-            "timestamp":"<float>",
             "inputs":[
                 "coinbase"
             ],
@@ -20,7 +19,6 @@
         {
             "hash":"3d930a99f00e00976e3789f",
             "signature":"<string>",
-            "timestamp":"<float>",
             "inputs":[
                 "eef8e89a0s9999c9d88e900d0s9"
             ],
@@ -41,14 +39,13 @@
 {
     "hash":"bcef28d9a0df",
     "nounce":"461408",
-    "pow":"00000e39d0s0ca093",
+    "proofOfWork":"00000e39d0s0ca093",
     "timestamp":"<float>",
     "previous":"a3f0939aa9d99300e9f0cfae302",
     "transactions":[
         {
             "hash":"cdabf8e89a0s9999c9d88e900d0s212",
             "signature":"<string>",
-            "timestamp":"<float>",
             "inputs":[
                 "coinbase"
             ],
@@ -65,7 +62,6 @@
         {
             "hash":"efd2399d09a900",
             "signature":"<string>",
-            "timestamp":"<float>",
             "inputs":[
                 "3d930a99f00e00976e3789f",
                 "cdabf8e89a0s9999c9d88e900d0s212"   

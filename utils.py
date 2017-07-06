@@ -17,7 +17,7 @@ def get_blockchain():
 
 def calc_difficulty():
     # Temporary difficulty algorith: 1 - num_blocks / 1000
-    return 1 - len(get_blockchain()) / 1000.0
+    return int((1 - len(get_blockchain()) / 1000.0) + 2)
 
 def calc_coinbase():
     # Temporary coinbase algoithm 100 - (num_blocks / 1000) * 100

@@ -11,7 +11,6 @@ class Transaction:
     def __init__(self, **kwargs):
         self.inputs = kwargs['inputs']
         self.outputs = kwargs['outputs']
-        self.timestamp = time.time()
         if "hash" not in kwargs:
             self.hash = self.create_transaction_hash() 
         else:
@@ -24,27 +23,35 @@ class Transaction:
 
         self.keys = utils.get_keys()
 
+    def to_dict(self):
+        return {
+            "hash":self.hash,
+            "signature":self.signature,
+            "inputs":self.inputs,
+            "outputs":self.outputs
+        }
+
     def sign_transaction(self):
         if not self.signature:
-            self.signature = base64.b64encode(rsa.sign(self.hash.encode(), self.keys['private'], "SHA-1"))
+            self.signature = base64.b64encode(rsa.sign(self.hash.encode(), self.keys['private'], "SHA-1")).decode()
         else:
             raise Exception("Transaction already signed.")
 
     def create_transaction_hash(self):
-        concatinatedString = "{}".format(self.timestamp)
+        plaintext = ""
         for input_ in self.inputs:
-            concatinatedString += input_
-            #concatinatedString += input_['txhash']
-            #concatinatedString += str(input_['outputIndex'])
+            plaintext += input_
+            #plaintext += input_['txhash']
+            #plaintext += str(input_['outputIndex'])
         for output in self.outputs:
-            concatinatedString += output['toAddress']
-            concatinatedString += str(output['amount'])
-        return hashlib.sha1(concatinatedString.encode()).hexdigest()
+            plaintext += output['toAddress']
+            plaintext += str(output['amount'])
+        return hashlib.sha1(plaintext.encode()).hexdigest()
             
     def verify_transaction(self):
         checkHash = self.create_transaction_hash() 
         if checkHash != self.hash:
-            raise Exception("Transaction is invalid.")
+            raise Exception("Transaction hash is invalid.")
         if self.is_spent():
             return Exception("Transaction is already spent.")
         if not rsa.verify(self.hash.encode(), base64.b64decode(self.signature), load_public_key(self.outputs[0]['toAddress'])):
@@ -62,7 +69,7 @@ class Transaction:
         for block in blockChain:
             for transaction in block['transactions']:
                 for input_ in transaction['inputs']:
-                    if input_['hash'] == self.hash:
+                    if input_ == self.hash:
                         return True
         return False
 
@@ -78,7 +85,6 @@ class Transaction:
         return {
             "hash":self.hash,
             "signature":self.signature,
-            "timestamp":self.timestamp,
             "inputs":self.inputs,
             "outputs":self.outputs
         }
