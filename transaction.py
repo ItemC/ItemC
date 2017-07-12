@@ -11,7 +11,7 @@ class Transaction:
     def __init__(self, **kwargs):
         self.inputs = kwargs['inputs']
         self.outputs = kwargs['outputs']
-        if "hash" not in kwargs:
+        if not kwargs.get("hash"):
             self.hash = self.create_transaction_hash() 
         else:
             self.hash = kwargs['hash']
@@ -41,8 +41,6 @@ class Transaction:
         plaintext = ""
         for input_ in self.inputs:
             plaintext += input_
-            #plaintext += input_['txhash']
-            #plaintext += str(input_['outputIndex'])
         for output in self.outputs:
             plaintext += output['toAddress']
             plaintext += str(output['amount'])
@@ -58,13 +56,49 @@ class Transaction:
             return Exception("Invalid Signature")
         if not self.inputs_valid():
             return Exception("Inputs are invalid")
+        if not self.outputs_valid():
+            return Exception("Outputs are invalid")
 
     def inputs_valid(self):
+        """
+        Checks to see if input being used has not already been used
+        """
         # Need to think about this more
         blockChain = utils.get_blockchain()
+        for input_ in self.inputs:
+            if input_ != "coinbase":
+                for block in blockChain:
+                    for transaction in block['transactions']:
+                        for input_check in transaction['inputs']:
+                            if input_check == input_:
+                                return False
         return True                            
 
+    def outputs_valid(self):
+        """
+        Checks that the amount in inputs is equal to amount in outputs.
+        """
+        blockChain = utils.get_blockchain()
+        # Get price of inputs
+        inputs_total = 0
+        for input_ in self.inputs:
+            for block in blockChain:
+                for transaction in block['transactions']:
+                    if input_ == transaction['hash']:
+                        for output in transaction['outputs']:
+                            if output['toAddress'] == self.keys['public']:
+                                inputs_total += output['amount']
+        outputs_total = 0
+        for output in self.outputs:
+            outputs_total += output['amount']
+        if outputs_total != inputs_total:
+            return False
+        return True
+
     def is_spent(self):
+        """
+        Checks if this transaction is spent or not
+        """
         blockChain = utils.get_blockchain()
         for block in blockChain:
             for transaction in block['transactions']:
