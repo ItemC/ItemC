@@ -114,12 +114,13 @@ class Transaction:
         self.verify_transaction()
         if self.is_spent():
             raise Exception("Transaction is already spent")
-
-        # Send to network 
-        return {
+        transaction = {
             "hash":self.hash,
             "signature":self.signature,
             "inputs":self.inputs,
             "outputs":self.outputs
         }
+
+        # Send to network 
+        return transaction
 
